@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">lab6_4</string>
+    <string name="imageDescription">image</string>
+    <string name="download_image">Download image</string>
+</resources>
