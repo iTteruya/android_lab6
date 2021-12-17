@@ -7,17 +7,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.net.URL
 
 class MainViewModel: ViewModel() {
     val bitmap: MutableLiveData<Bitmap> = MutableLiveData()
 
     fun downloadPic() {
-        viewModelScope.launch(Dispatchers.IO) {
-            bitmap.postValue(
-                BitmapFactory
-                    .decodeStream(URL(MainActivity.IMG).openConnection().getInputStream())
-            )
+        viewModelScope.launch {
+            bitmap.value = withContext(Dispatchers.IO) {
+                val url = URL(MainActivity.IMG)
+                val stream = url.openStream()
+                BitmapFactory.decodeStream(stream)
+            }
         }
     }
 }
